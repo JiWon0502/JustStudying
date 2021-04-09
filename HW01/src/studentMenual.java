@@ -59,7 +59,7 @@ public class studentMenual {
 				for(int i = 0; i < stdntNum; i ++) { //배열 저장
 					stdntGrade[i] = getStudentGrade(i+1, s); //각 점수를 가져오는 메소드
 					sumGrade += stdntGrade[i];//to use the sum of the Grades later to calculate average
-					if(maxGrade < stdntGrade[i]) maxGrade = stdntGrade[i]; //to use the maxGrade later
+					maxGrade = maxGrade > stdntGrade[i]? maxGrade : stdntGrade[i]; //to use the maxGrade later
 				}
 				break;
 			//3rd menu
@@ -140,17 +140,17 @@ public class studentMenual {
 	//prints the list and grade graph
 	public static void printStudentGrade(int i, int grade) {
 		if(grade == 100) { //세자리 수인 경우
-			System.out.print(i+"번 학생 : "+grade+"점   ");
+			System.out.print((i+1)+"번 학생 : "+grade+"점   ");
 			for(int j = 0; j < grade; j++) System.out.print("*");
 			System.out.println("");
 		}
 		else if(grade < 10) { //한자리 수인 경우
-			System.out.print(i+"번 학생 : "+grade+"점     ");
+			System.out.print((i+1)+"번 학생 : "+grade+"점     ");
 			for(int j = 0; j < grade; j++) System.out.print("*");
 			System.out.println("");
 		}
 		else { //두자리 수인 경우
-			System.out.print(i+"번 학생 : "+grade+"점    ");
+			System.out.print((i+1)+"번 학생 : "+grade+"점    ");
 			for(int j = 0; j < grade; j++) System.out.print("*");
 			System.out.println("");
 		}
