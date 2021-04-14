@@ -5,9 +5,7 @@ int main(){
     char arr[51][51] = {0,};
     scanf("%d %d", &N, &M);
     for(int i = 0; i < N; i++){
-        for(int j = 0; j < M; j++){
-            scanf("%c", &arr[i][j]);
-        }
+        scanf("%s", arr[i]);
     }
     for(int i = 0; i<N-7; i++){
         for(int j = 0; j<M-7; j++){
