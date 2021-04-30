@@ -19,8 +19,7 @@ int calc(int n, int color){
             dp[n][color] = arr[n][color] + min(calc(n-1, Blue), calc(n-1,Green));
         else if(color == Green)
             dp[n][color] = arr[n][color]+ min(calc(n-1, Red), calc(n-1,Blue));
-        else dp[n][color] = arr[n][color] +  min(calc(n-1, Blue), calc(n-1,Blue));
-        printf("%d %d %d\n", n, color, dp[n][color]);
+        else dp[n][color] = arr[n][color] +  min(calc(n-1, Green), calc(n-1,Red));
         return dp[n][color];
     }
 }
