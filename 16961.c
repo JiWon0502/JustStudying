@@ -21,52 +21,46 @@
 싸움이 없는 날 중 가장 많은 투숙객이 있었던 날에 투숙한 사람의 수. 싸움이 없는 날이 없으면 0을 출력한다.
 가장 오랜 기간 투숙한 사람이 투숙한 날의 수*/
 #include<stdio.h>
-struct hotels{
-    char c;
+struct days{
+    int t;
     int s;
-    int e;
 };
 
 int main(){
-    int N;
+    int N, s, e, max_non=0;
+    char c;
     int num[5]= {0,0,0,0,0};/*0 num에 순서대로 1명이상/1 사람수/2 싸움x날수/3 싸움X중 많은 투숙객 수/4 오랜 투숙 날수*/
-    int day[3][366];/*0에는 T, 1에는 S, 2에는 싸움 유무(싸우면 1) */
-    scanf("%d",&N);
-    struct hotels ppl[N];
+    scanf("%d", &N);
+    struct days day[370];
+    for(int i = 0; i<370; i++){
+        day[i].s = 0;
+        day[i].t = 0;
+    }
     
-    for(int i=N; i>0;i--){//투숙객 수 전부 저장
-        scanf("%c %d %d",&ppl[i].c,&ppl[i].s,&ppl[i].e);
-        if(ppl[i].c == 'T'){
-            for(int j=ppl[i].s;j<ppl[i].e;j++){
-                day[0][j]+=1;
-            }
-        }
-        else{
-            for(int j=ppl[i].s;j<ppl[i].e;j++){
-                day[1][j]+=1;
-            }
-        }
-        if(num[4]< ppl[i].e-ppl[i].s+1)//4 가장 많은 투숙객 수 확인
-            num[4] = ppl[i].e-ppl[i].s+1;
-    }
-    for(int i=N; i>0;i--){
-        if((day[0][i]+day[1][i])>0){//0 1명 이상 확인
-            num[0]++;
-        }
-        if((day[0][i]+day[1][i])>num[1]){
-            num[1] = (day[0][i]+day[1][i]);//1 초ㅣ대사람수
-        }
+    while(N-->0){
+        scanf(" %c %d %d",&c, &s, &e);
         
-        if(day[0][i]==0 || day[0][i]!=day[1][i]){//싸움 여부 저장
-            day[2][i]=1;//싸움
+        if((e-s+1) > num[4]) num[4] = e-s+1;
+        
+        if(c == 'T'){
+            for(int j = s; j<=e; j++)
+                day[j].t++;
         }
-        else{
-            day[2][i]=0;
-            num[2]+=1;//2 싸움X 날수 확인
-            if(day[0][i]+day[1][i]>num[3]){
-                num[3]=day[0][i]+day[1][i]; //싸움 안한 날 중 가장 많은 투숙객 수
-            }
+        else  { 
+            for(int j = s; j<=e; j++)
+                day[j].s++;
         }
     }
-    printf("%d\n%d\n%d\n%d\n%d",num[0],num[1],num[2],num[3],num[4]);
+
+    for(int i = 1; i<367; i++){
+        if((day[i].s+ day[i].t)>= 1) num[0]++;
+        if((day[i].s+ day[i].t)>= num[1]) num[1] = (day[i].s+ day[i].t);
+        if(day[i].s == day[i].t && day[i].t!=0) {
+            num[2]++;
+            if((day[i].t+day[i].s)>(day[max_non].s+day[max_non].t))
+                max_non = i;
+        }
+    }
+    num[3] = day[max_non].s+day[max_non].t;
+    for(int i = 0; i<5; i++) printf("%d\n", num[i]);
 }
